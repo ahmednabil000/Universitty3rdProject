@@ -1,6 +1,3 @@
-using Microsoft.EntityFrameworkCore;
-using Shop.Server.Models.ApplicationDbContext;
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -13,10 +10,10 @@ builder.Services.AddSwaggerGen();
 
 // Configure Ef core
 
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-{
-	options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
-});
+//builder.Services.AddDbContext<ApplicationDbContext>(options =>
+//{
+//	options.UseSqlServer("Data Source=SQL6031.site4now.net;Initial Catalog=db_aa7408_universityproject;User Id=db_aa7408_universityproject_admin;Password=ahmed3400");
+//});
 
 var app = builder.Build();
 
