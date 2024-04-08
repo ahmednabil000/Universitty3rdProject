@@ -1,23 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Shop.Server.Models;
+﻿namespace Shop.Server.Models;
 
 public partial class Order
 {
-    public int OId { get; set; }
+	public int OId { get; set; }
 
-    public int? PId { get; set; }
+	public int? PId { get; set; }
 
-    public int? CId { get; set; }
+	public int? CId { get; set; }
 
-    public string PName { get; set; } = null!;
+	public string PName { get; set; } = null!;
 
-    public string CName { get; set; } = null!;
+	public string CName { get; set; } = null!;
 
-    public int Price { get; set; }
+	public int Price { get; set; }
 
-    public virtual Customer? CIdNavigation { get; set; }
+	public virtual Customer? Customer { get; set; }
 
-    public virtual Product? PIdNavigation { get; set; }
+	public virtual Product? Product { get; set; }
 }

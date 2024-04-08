@@ -15,11 +15,29 @@ namespace Shop.Server.Controllers
 			_productService = productService;
 		}
 		[HttpGet]
-		public async Task<RestDTO<List<Product>>> Get(RequestDTO input)
+		public async Task<RestDTO<List<Product>>> Get([FromQuery] RequestDTO input)
 		{
 			var products = await _productService.GetProductsAsync(input);
 
-			return new RestDTO<List<Product>> { PageIndex = input.PageIndex, PageSize = input.PageSize };
+			return new RestDTO<List<Product>>
+			{
+				Data = products,
+				PageIndex = input.PageIndex,
+				PageSize = input.PageSize
+			};
+		}
+		[HttpPost]
+		public async Task<RestDTO<Product>> Post([FromQuery] Product product)
+		{
+			if (product == null) return new RestDTO<Product>()
+			{
+				Data = product,
+			};
+			await _productService.AddProductAsync(product);
+			return new RestDTO<Product>()
+			{
+				Data = product,
+			};
 		}
 	}
 }

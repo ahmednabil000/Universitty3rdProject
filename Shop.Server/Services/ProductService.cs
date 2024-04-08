@@ -14,13 +14,13 @@ namespace Shop.Server.Services
 			_context = context;
 		}
 
-		public async Task AddProduct(Product product)
+		public async Task AddProductAsync(Product product)
 		{
 			await _context.Products.AddAsync(product);
 			await _context.SaveChangesAsync();
 		}
 
-		public async Task DeleteProduct(int prodId)
+		public async Task DeleteProductAsync(int prodId)
 		{
 			var prod = await _context.Products.FirstOrDefaultAsync(p => p.PId == prodId);
 			if (prod != null) _context.Products.Remove(prod);
@@ -41,7 +41,7 @@ namespace Shop.Server.Services
 			return await productsQuery.ToListAsync();
 		}
 
-		public async Task UpdateProduct(Product product)
+		public async Task UpdateProductAsync(Product product)
 		{
 			_context.Update(product);
 			await _context.SaveChangesAsync();
