@@ -1,3 +1,8 @@
+using Microsoft.EntityFrameworkCore;
+using Shop.Server.Models;
+using Shop.Server.Services;
+using Shop.Server.ServicesContracts;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -7,13 +12,16 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// Add Our services to the container
+builder.Services.AddScoped<IProductService, ProductService>();
+
 
 // Configure Ef core
 
-//builder.Services.AddDbContext<ApplicationDbContext>(options =>
-//{
-//	options.UseSqlServer("Data Source=SQL6031.site4now.net;Initial Catalog=db_aa7408_universityproject;User Id=db_aa7408_universityproject_admin;Password=ahmed3400");
-//});
+builder.Services.AddDbContext<DbAa7408UniversityprojectContext>(options =>
+{
+	options.UseSqlServer("Data Source=SQL6031.site4now.net;Initial Catalog=db_aa7408_universityproject;User Id=db_aa7408_universityproject_admin;Password=ahmed3400");
+});
 
 var app = builder.Build();
 
