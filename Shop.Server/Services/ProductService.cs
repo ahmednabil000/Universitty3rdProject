@@ -13,6 +13,11 @@ namespace Shop.Server.Services
 		{
 			_context = context;
 		}
+		public async Task<Product> GetProductAsync(int productId)
+		{
+			var prod = await _context.Products.FindAsync(productId);
+			return prod;
+		}
 
 		public async Task AddProductAsync(Product product)
 		{
@@ -46,5 +51,6 @@ namespace Shop.Server.Services
 			_context.Update(product);
 			await _context.SaveChangesAsync();
 		}
+
 	}
 }

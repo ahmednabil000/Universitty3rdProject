@@ -39,5 +39,26 @@ namespace Shop.Server.Controllers
 				Data = product,
 			};
 		}
+		[HttpPut]
+		public async Task<RestDTO<Product>> Put([FromQuery] Product product)
+		{
+			if (product != null)
+			{
+				await _productService.UpdateProductAsync(product);
+			}
+			return new RestDTO<Product>()
+			{
+				Data = product,
+
+			};
+		}
+		[HttpDelete]
+		public async Task<RestDTO<Product>> Delete([FromQuery] int productId)
+		{
+			var prod = await _productService.GetProductAsync(productId);
+			await _productService.DeleteProductAsync(productId);
+			return new RestDTO<Product>() { Data = prod };
+		}
+
 	}
 }
