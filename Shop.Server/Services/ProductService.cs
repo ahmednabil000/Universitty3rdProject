@@ -13,7 +13,7 @@ namespace Shop.Server.Services
 		{
 			_context = context;
 		}
-		public async Task<Product> GetProductAsync(int productId)
+		public async Task<Product> GetProductAsync(Guid productId)
 		{
 			var prod = await _context.Products.FindAsync(productId);
 			return prod;
@@ -25,7 +25,7 @@ namespace Shop.Server.Services
 			await _context.SaveChangesAsync();
 		}
 
-		public async Task DeleteProductAsync(int prodId)
+		public async Task DeleteProductAsync(Guid prodId)
 		{
 			var prod = await _context.Products.FirstOrDefaultAsync(p => p.PId == prodId);
 			if (prod != null) _context.Products.Remove(prod);

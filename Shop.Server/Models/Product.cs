@@ -2,7 +2,7 @@
 
 public partial class Product
 {
-	public int PId { get; set; }
+	public Guid PId { get; set; }
 
 	public string PName { get; set; } = null!;
 

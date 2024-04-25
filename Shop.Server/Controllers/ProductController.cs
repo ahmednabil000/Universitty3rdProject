@@ -53,7 +53,7 @@ namespace Shop.Server.Controllers
 			};
 		}
 		[HttpDelete]
-		public async Task<RestDTO<Product>> Delete([FromQuery] int productId)
+		public async Task<RestDTO<Product>> Delete([FromQuery] Guid productId)
 		{
 			var prod = await _productService.GetProductAsync(productId);
 			await _productService.DeleteProductAsync(productId);

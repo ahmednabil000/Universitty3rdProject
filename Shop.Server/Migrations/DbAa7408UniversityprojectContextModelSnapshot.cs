@@ -273,8 +273,8 @@ namespace Shop.Server.Migrations
                         .HasColumnType("varchar(50)")
                         .HasColumnName("p_name");
 
-                    b.Property<int?>("ProductPId")
-                        .HasColumnType("int");
+                    b.Property<Guid?>("ProductPId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("BId");
 
@@ -386,8 +386,8 @@ namespace Shop.Server.Migrations
                         .HasColumnType("int")
                         .HasColumnName("price");
 
-                    b.Property<int?>("ProductPId")
-                        .HasColumnType("int");
+                    b.Property<Guid?>("ProductPId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("OId");
 
@@ -400,8 +400,8 @@ namespace Shop.Server.Migrations
 
             modelBuilder.Entity("Shop.Server.Models.Product", b =>
                 {
-                    b.Property<int>("PId")
-                        .HasColumnType("int")
+                    b.Property<Guid>("PId")
+                        .HasColumnType("uniqueidentifier")
                         .HasColumnName("p_id");
 
                     b.Property<string>("PDesc")
@@ -429,36 +429,32 @@ namespace Shop.Server.Migrations
 
             modelBuilder.Entity("Shop.Server.Models.ShoppingCart", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+                    b.Property<Guid>("UserID")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("USerID")
-                        .HasColumnType("int");
-
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
                     b.ToTable("ShoppingCarts");
                 });
 
             modelBuilder.Entity("Shop.Server.Models.ShoppingCartItem", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
-
-                    b.Property<int>("ProductID")
-                        .HasColumnType("int");
+                    b.Property<Guid>("ProductID")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.Property<int>("ShoppingCartID")
-                        .HasColumnType("int");
+                    b.Property<Guid>("ShoppingCartID")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("ID");
 
@@ -562,7 +558,7 @@ namespace Shop.Server.Migrations
                         .IsRequired();
 
                     b.HasOne("Shop.Server.Models.ShoppingCart", "ShoppingCart")
-                        .WithMany()
+                        .WithMany("Items")
                         .HasForeignKey("ShoppingCartID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -577,6 +573,11 @@ namespace Shop.Server.Migrations
                     b.Navigation("Bills");
 
                     b.Navigation("Orders");
+                });
+
+            modelBuilder.Entity("Shop.Server.Models.ShoppingCart", b =>
+                {
+                    b.Navigation("Items");
                 });
 #pragma warning restore 612, 618
         }
