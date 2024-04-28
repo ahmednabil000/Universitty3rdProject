@@ -1,7 +1,10 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Shop.Server.Models;
 using Shop.Server.Services;
 using Shop.Server.ServicesContracts;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,10 +16,29 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+
 // Add Our services to the container
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IShoppingCartService, ShoppingCartService>();
+builder.Services.AddScoped<IAccountService,AccountService>();
+
+// Add authentication service
 
 
+builder.Services.AddAuthentication().AddJwtBearer(options =>
+{
+	var issuer = builder.Configuration["JWT:Issuer"];
+	var key = builder.Configuration["JWT:Key"];
+	  options.TokenValidationParameters = new TokenValidationParameters
+	  {
+		  ValidateIssuer = true,
+		  ValidateAudience = false,
+		  ValidateLifetime = true,
+		  ValidateIssuerSigningKey = true,
+		  ValidIssuer = issuer,
+		  IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key))
+	  };
+});
 // Configure Ef core
 
 builder.Services.AddDbContext<DbAa7408UniversityprojectContext>(options =>
