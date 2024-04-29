@@ -9,28 +9,32 @@ using System.Text;
 
 namespace Shop.Server.Services
 {
-	public class AccountService:IAccountService
+	public class AccountService : IAccountService
 	{
 		private readonly SignInManager<IdentityUser> _signInManager;
 		private readonly UserManager<IdentityUser> _userManager;
 		private readonly IConfiguration _configuration;
 
-		public AccountService(SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager,IConfiguration configuration)
-		{ 
+		public AccountService(SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager, IConfiguration configuration)
+		{
 			_signInManager = signInManager;
 			_userManager = userManager;
 			_configuration = configuration;
 		}
-	
-		public async Task<string> LoginAsync(LogIn login)
+
+		public async Task<bool> CheckLoginCredentialsAsync(LogInDTO login)
 		{
-			var token =await GenerateTokenAsync(login);
+			var user = await _userManager.FindByEmailAsync(login.Email);
+			if (user == null) throw new Exception("User not found");
 
-			return token;
+			var result = await _userManager.CheckPasswordAsync(user, login.Password);
 
+			if (result == false) throw new Exception("Password is not correct for the specified email");
+
+			return true;
 		}
 
-		public async Task<IdentityResult> RegisterAsync(Registration registration)
+		public async Task<IdentityResult> RegisterAsync(RegistrationDTO registration)
 		{
 
 			var user = new IdentityUser { UserName = registration.Email, Email = registration.Email };
@@ -39,23 +43,25 @@ namespace Shop.Server.Services
 			return result;
 		}
 
-		private async Task<string> GenerateTokenAsync(LogIn login)
+
+
+		public async Task<string> GenerateTokenAsync(LogInDTO login)
 		{
 			var user = await _userManager.FindByEmailAsync(login.Email);
-			if(user == null) throw new Exception("User not found");
+			if (user == null) throw new Exception("User not found");
 
-			var key = _configuration["JWT:Key"];	
-			var issuer= _configuration["JWT:Issuer"];	
+			var key = _configuration["JWT:Key"];
+			var issuer = _configuration["JWT:Issuer"];
 
 			var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key));
 			var signingCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
-			var roles =await _userManager.GetRolesAsync(user);
+			var roles = await _userManager.GetRolesAsync(user);
 			var claims = new List<Claim>
 			{
 				new Claim("user-id",user.Id)
 			};
-			foreach(var role in roles)
+			foreach (var role in roles)
 			{
 				claims.Add(new Claim(ClaimTypes.Role, role));
 			}
@@ -63,7 +69,7 @@ namespace Shop.Server.Services
 			var token = new JwtSecurityToken(
 				issuer,
 				null,
-				claims, 
+				claims,
 				expires: DateTime.Now.AddHours(1),
 				signingCredentials: signingCredentials);
 
@@ -72,6 +78,6 @@ namespace Shop.Server.Services
 
 		}
 
-	
+
 	}
 }

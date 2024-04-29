@@ -2,12 +2,12 @@
 
 namespace Shop.Server.Models.DTO
 {
-    public class Registration
-    {
-        [Required]
+	public class RegistrationDTO
+	{
+		[Required]
 		[StringLength(10)]
-		
-        public string Name { get; set; }
+
+		public string Name { get; set; }
 		[Required]
 		[EmailAddress]
 		public string Email { get; set; }
@@ -20,5 +20,5 @@ namespace Shop.Server.Models.DTO
 
 
 
-    }
+	}
 }

@@ -14,17 +14,19 @@ namespace Shop.Server.Controllers
 	{
 		private readonly IConfiguration _configuration;
 		private readonly IAccountService _accountService;
+		private readonly IHttpContextAccessor _contextAccessor;
 
-		public AccountController(IConfiguration configuration, IAccountService accountService)
+		public AccountController(IConfiguration configuration, IAccountService accountService, IHttpContextAccessor httpContextAccessor)
 		{
-			configuration = _configuration;
+			_configuration = configuration;
 			_accountService = accountService;
+			_contextAccessor = httpContextAccessor;
 		}
 		[HttpPost]
 		[Route("register")]
 
 
-		public async Task<IActionResult> register([FromQuery]Registration registration)
+		public async Task<IActionResult> register([FromQuery] RegistrationDTO registration)
 		{
 			var result = await _accountService.RegisterAsync(registration);
 			if (result.Succeeded)
@@ -39,20 +41,24 @@ namespace Shop.Server.Controllers
 		[HttpPost]
 		[Route("login")]
 
-		public string login(LogIn login)
+		public async Task<IActionResult> login([FromQuery] LogInDTO login)
 		{
-			SqlConnection sqlConnection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection").ToString());
-			SqlDataAdapter sqlDataAdapter = new SqlDataAdapter("SELECT * FROM LogIn WHERE Email = '" + login.Email + "' AND Password = '" + login.Password + "'", sqlConnection);
-			DataTable dataTable = new DataTable();
-			sqlDataAdapter.Fill(dataTable);
-			if (dataTable.Rows.Count == 0)
+			try
 			{
-				return "Failed";
+				var result = await _accountService.CheckLoginCredentialsAsync(login);
+				var token = await _accountService.GenerateTokenAsync(login);
+				_contextAccessor.HttpContext!.Response.Headers["Authorization"] = token;
+				return Ok(token);
 			}
-			else
+			catch (Exception ex)
 			{
-				return "Success";
+				var problem = new ProblemDetails();
+				problem.Detail = ex.Message;
+				problem.Status = StatusCodes.Status404NotFound;
+
+				return BadRequest(problem);
 			}
+
 		}
 
 	}

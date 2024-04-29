@@ -6,8 +6,10 @@ public partial class Product
 
 	public string PName { get; set; } = null!;
 
-	public int PPrice { get; set; }
+	public decimal PPrice { get; set; }
 
 	public string PDesc { get; set; } = null!;
+
+	public int Quantity { get; set; }
 
 }
