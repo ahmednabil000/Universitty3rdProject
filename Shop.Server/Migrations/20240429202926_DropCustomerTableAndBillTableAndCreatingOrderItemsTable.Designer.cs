@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Shop.Server.Models;
 
@@ -11,9 +12,11 @@ using Shop.Server.Models;
 namespace Shop.Server.Migrations
 {
     [DbContext(typeof(DbAa7408UniversityprojectContext))]
-    partial class DbAa7408UniversityprojectContextModelSnapshot : ModelSnapshot
+    [Migration("20240429202926_DropCustomerTableAndBillTableAndCreatingOrderItemsTable")]
+    partial class DropCustomerTableAndBillTableAndCreatingOrderItemsTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -251,12 +254,17 @@ namespace Shop.Server.Migrations
                     b.Property<Guid>("OrderId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("OrderId");
+
+                    b.HasIndex("ProductId");
 
                     b.ToTable("OrderItems");
                 });
@@ -318,26 +326,39 @@ namespace Shop.Server.Migrations
 
             modelBuilder.Entity("Shop.Server.Models.Product", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("PId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("p_id");
+
+                    b.Property<Guid?>("OrderId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("PDesc")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("p_desc");
 
                     b.Property<string>("PName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("p_name");
 
                     b.Property<decimal>("PPrice")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,2)")
+                        .HasColumnName("p_price");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("PId");
 
-                    b.ToTable("Products");
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("product", (string)null);
                 });
 
             modelBuilder.Entity("Shop.Server.Models.ShoppingCart", b =>
@@ -360,10 +381,18 @@ namespace Shop.Server.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("ProductID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
                     b.Property<Guid>("ShoppingCartID")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("ID");
+
+                    b.HasIndex("ProductID");
 
                     b.HasIndex("ShoppingCartID");
 
@@ -433,28 +462,51 @@ namespace Shop.Server.Migrations
             modelBuilder.Entity("OrderItem", b =>
                 {
                     b.HasOne("Order", "order")
-                        .WithMany("Items")
+                        .WithMany()
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Shop.Server.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+
                     b.Navigation("order");
+                });
+
+            modelBuilder.Entity("Shop.Server.Models.Product", b =>
+                {
+                    b.HasOne("Order", null)
+                        .WithMany("Product")
+                        .HasForeignKey("OrderId");
                 });
 
             modelBuilder.Entity("Shop.Server.Models.ShoppingCartItem", b =>
                 {
+                    b.HasOne("Shop.Server.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Shop.Server.Models.ShoppingCart", "ShoppingCart")
                         .WithMany("Items")
                         .HasForeignKey("ShoppingCartID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Product");
+
                     b.Navigation("ShoppingCart");
                 });
 
             modelBuilder.Entity("Order", b =>
                 {
-                    b.Navigation("Items");
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("Shop.Server.Models.ShoppingCart", b =>

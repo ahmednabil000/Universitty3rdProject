@@ -1,6 +1,9 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using Shop.Server.Models;
 using Shop.Server.Services;
 using Shop.Server.ServicesContracts;
@@ -14,14 +17,40 @@ builder.Services.AddControllers();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+	options.SwaggerDoc("v1", new OpenApiInfo { Title = "Demo API", Version = "v1" });
+	options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+	{
+		In = ParameterLocation.Header,
+		Description = "Please enter a valid token",
+		Name = "Authorization",
+		Type = SecuritySchemeType.Http,
+		BearerFormat = "JWT",
+		Scheme = "Bearer"
+	});
+	options.AddSecurityRequirement(new OpenApiSecurityRequirement
+	{
+		{
+			new OpenApiSecurityScheme
+			{
+				Reference = new OpenApiReference
+				{
+					Type=ReferenceType.SecurityScheme,
+					Id="Bearer"
+				}
+			},
+			new string[]{}
+		}
+	});
+});
 
 
 // Add Our services to the container
-builder.Services.AddHttpContextAccessor();
-builder.Services.AddScoped<IProductService, ProductService>();
-builder.Services.AddScoped<IShoppingCartService, ShoppingCartService>();
-builder.Services.AddScoped<IAccountService, AccountService>();
+// builder.Services.AddHttpContextAccessor();
+// builder.Services.AddScoped<IProductService, ProductService>();
+// builder.Services.AddScoped<IShoppingCartService, ShoppingCartService>();
+// builder.Services.AddScoped<IAccountService, AccountService>();
 
 // Add authentication service
 builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
@@ -33,8 +62,9 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
 })
   .AddEntityFrameworkStores<DbAa7408UniversityprojectContext>();
 
-builder.Services.AddAuthentication().AddJwtBearer(options =>
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {
+
 	var issuer = builder.Configuration["JWT:Issuer"];
 	var key = builder.Configuration["JWT:Key"];
 	options.TokenValidationParameters = new TokenValidationParameters
@@ -46,6 +76,7 @@ builder.Services.AddAuthentication().AddJwtBearer(options =>
 		ValidIssuer = issuer,
 		IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key))
 	};
+
 });
 // Configure Ef core
 

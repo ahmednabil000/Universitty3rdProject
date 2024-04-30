@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Shop.Server.Models;
 
@@ -11,9 +12,11 @@ using Shop.Server.Models;
 namespace Shop.Server.Migrations
 {
     [DbContext(typeof(DbAa7408UniversityprojectContext))]
-    partial class DbAa7408UniversityprojectContextModelSnapshot : ModelSnapshot
+    [Migration("20240429220055_DropProductsTable")]
+    partial class DropProductsTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -316,30 +319,6 @@ namespace Shop.Server.Migrations
                     b.ToTable("feedback", (string)null);
                 });
 
-            modelBuilder.Entity("Shop.Server.Models.Product", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("PDesc")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("PPrice")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Products");
-                });
-
             modelBuilder.Entity("Shop.Server.Models.ShoppingCart", b =>
                 {
                     b.Property<Guid>("Id")
@@ -433,7 +412,7 @@ namespace Shop.Server.Migrations
             modelBuilder.Entity("OrderItem", b =>
                 {
                     b.HasOne("Order", "order")
-                        .WithMany("Items")
+                        .WithMany()
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -450,11 +429,6 @@ namespace Shop.Server.Migrations
                         .IsRequired();
 
                     b.Navigation("ShoppingCart");
-                });
-
-            modelBuilder.Entity("Order", b =>
-                {
-                    b.Navigation("Items");
                 });
 
             modelBuilder.Entity("Shop.Server.Models.ShoppingCart", b =>

@@ -4,7 +4,7 @@
     {
         public Guid Id { get; set; }
         public Guid UserID { get; set; }
-        public List<ShoppingCartItem> Items { get; set; }
+        public List<ShoppingCartItem> Items { get; set; } = new List<ShoppingCartItem>();
 
     }
 }

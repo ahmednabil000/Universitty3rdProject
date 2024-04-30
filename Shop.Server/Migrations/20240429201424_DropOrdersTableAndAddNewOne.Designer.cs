@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Shop.Server.Models;
 
@@ -11,9 +12,11 @@ using Shop.Server.Models;
 namespace Shop.Server.Migrations
 {
     [DbContext(typeof(DbAa7408UniversityprojectContext))]
-    partial class DbAa7408UniversityprojectContextModelSnapshot : ModelSnapshot
+    [Migration("20240429201424_DropOrdersTableAndAddNewOne")]
+    partial class DropOrdersTableAndAddNewOne
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -226,6 +229,9 @@ namespace Shop.Server.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<int?>("CustomerCId")
+                        .HasColumnType("int");
+
                     b.Property<decimal>("TotalCost")
                         .HasColumnType("decimal(18,2)");
 
@@ -237,28 +243,11 @@ namespace Shop.Server.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CustomerCId");
+
                     b.HasIndex("UserId1");
 
                     b.ToTable("Orders");
-                });
-
-            modelBuilder.Entity("OrderItem", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("OrderId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OrderId");
-
-                    b.ToTable("OrderItems");
                 });
 
             modelBuilder.Entity("Shop.Server.Models.Admin", b =>
@@ -284,6 +273,85 @@ namespace Shop.Server.Migrations
                     b.HasKey("AdminId");
 
                     b.ToTable("Admin", (string)null);
+                });
+
+            modelBuilder.Entity("Shop.Server.Models.Bill", b =>
+                {
+                    b.Property<int>("BId")
+                        .HasColumnType("int")
+                        .HasColumnName("B_id");
+
+                    b.Property<int?>("CId")
+                        .HasColumnType("int")
+                        .HasColumnName("c_id");
+
+                    b.Property<string>("CName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("c_name");
+
+                    b.Property<int?>("PId")
+                        .HasColumnType("int")
+                        .HasColumnName("p_id");
+
+                    b.Property<string>("PName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("p_name");
+
+                    b.Property<Guid?>("ProductPId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("BId");
+
+                    b.HasIndex("CId");
+
+                    b.HasIndex("ProductPId");
+
+                    b.ToTable("bill", (string)null);
+                });
+
+            modelBuilder.Entity("Shop.Server.Models.Customer", b =>
+                {
+                    b.Property<int>("CId")
+                        .HasColumnType("int")
+                        .HasColumnName("c_id");
+
+                    b.Property<string>("CName")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("c_name");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("email");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("password");
+
+                    b.Property<string>("RePassword")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("re_password");
+
+                    b.HasKey("CId");
+
+                    b.ToTable("customer", (string)null);
                 });
 
             modelBuilder.Entity("Shop.Server.Models.Feedback", b =>
@@ -318,26 +386,39 @@ namespace Shop.Server.Migrations
 
             modelBuilder.Entity("Shop.Server.Models.Product", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("PId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("p_id");
+
+                    b.Property<Guid?>("OrderId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("PDesc")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("p_desc");
 
                     b.Property<string>("PName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("p_name");
 
                     b.Property<decimal>("PPrice")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,2)")
+                        .HasColumnName("p_price");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("PId");
 
-                    b.ToTable("Products");
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("product", (string)null);
                 });
 
             modelBuilder.Entity("Shop.Server.Models.ShoppingCart", b =>
@@ -360,10 +441,18 @@ namespace Shop.Server.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("ProductID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
                     b.Property<Guid>("ShoppingCartID")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("ID");
+
+                    b.HasIndex("ProductID");
 
                     b.HasIndex("ShoppingCartID");
 
@@ -423,6 +512,10 @@ namespace Shop.Server.Migrations
 
             modelBuilder.Entity("Order", b =>
                 {
+                    b.HasOne("Shop.Server.Models.Customer", null)
+                        .WithMany("Orders")
+                        .HasForeignKey("CustomerCId");
+
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId1");
@@ -430,31 +523,59 @@ namespace Shop.Server.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("OrderItem", b =>
+            modelBuilder.Entity("Shop.Server.Models.Bill", b =>
                 {
-                    b.HasOne("Order", "order")
-                        .WithMany("Items")
-                        .HasForeignKey("OrderId")
+                    b.HasOne("Shop.Server.Models.Customer", "Customer")
+                        .WithMany("Bills")
+                        .HasForeignKey("CId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasConstraintName("FK_bill_customer");
 
-                    b.Navigation("order");
+                    b.HasOne("Shop.Server.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductPId");
+
+                    b.Navigation("Customer");
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("Shop.Server.Models.Product", b =>
+                {
+                    b.HasOne("Order", null)
+                        .WithMany("Product")
+                        .HasForeignKey("OrderId");
                 });
 
             modelBuilder.Entity("Shop.Server.Models.ShoppingCartItem", b =>
                 {
+                    b.HasOne("Shop.Server.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Shop.Server.Models.ShoppingCart", "ShoppingCart")
                         .WithMany("Items")
                         .HasForeignKey("ShoppingCartID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Product");
+
                     b.Navigation("ShoppingCart");
                 });
 
             modelBuilder.Entity("Order", b =>
                 {
-                    b.Navigation("Items");
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("Shop.Server.Models.Customer", b =>
+                {
+                    b.Navigation("Bills");
+
+                    b.Navigation("Orders");
                 });
 
             modelBuilder.Entity("Shop.Server.Models.ShoppingCart", b =>

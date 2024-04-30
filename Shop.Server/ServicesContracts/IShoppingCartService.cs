@@ -6,7 +6,7 @@ namespace Shop.Server.ServicesContracts
 
     public interface IShoppingCartService
     {
-        Task<ShoppingCart> GetShoppingCartAsync(Guid userId);
+        Task<ShoppingCart> GetShoppingCartAsync();
         Task AddShoppingCartItemAsync(ShoppingCartItem item);
         Task AddShoppingCartItemsAsync(List<ShoppingCartItem> items);
 

@@ -16,19 +16,13 @@ public partial class DbAa7408UniversityprojectContext : IdentityDbContext<Identi
 	}
 
 	public virtual DbSet<Admin> Admins { get; set; }
-
-	public virtual DbSet<Bill> Bills { get; set; }
-
-	public virtual DbSet<Customer> Customers { get; set; }
-
-	public virtual DbSet<Feedback> Feedbacks { get; set; }
-
 	public virtual DbSet<Order> Orders { get; set; }
-
-	public virtual DbSet<Product> Products { get; set; }
+	public virtual DbSet<Feedback> Feedbacks { get; set; }
 	public virtual DbSet<ShoppingCart> ShoppingCarts { get; set; }
 	public virtual DbSet<ShoppingCartItem> ShoppingCartItems { get; set; }
-	
+	public virtual DbSet<OrderItem> OrderItems { get; set; }
+	public virtual DbSet<Product> Products { get; set; }
+
 
 	protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
@@ -53,60 +47,7 @@ public partial class DbAa7408UniversityprojectContext : IdentityDbContext<Identi
 				.HasColumnName("password");
 		});
 
-		modelBuilder.Entity<Bill>(entity =>
-		{
-			entity.HasKey(e => e.BId);
 
-			entity.ToTable("bill");
-
-			entity.Property(e => e.BId)
-				.ValueGeneratedNever()
-				.HasColumnName("B_id");
-			entity.Property(e => e.CId).HasColumnName("c_id");
-			entity.Property(e => e.CName)
-				.HasMaxLength(50)
-				.IsUnicode(false)
-				.HasColumnName("c_name");
-			entity.Property(e => e.PId).HasColumnName("p_id");
-			entity.Property(e => e.PName)
-				.HasMaxLength(50)
-				.IsUnicode(false)
-				.HasColumnName("p_name");
-
-			entity.HasOne(d => d.Customer).WithMany(p => p.Bills)
-				.HasForeignKey(d => d.CId)
-				.OnDelete(DeleteBehavior.Cascade)
-				.HasConstraintName("FK_bill_customer");
-
-
-		});
-
-		modelBuilder.Entity<Customer>(entity =>
-		{
-			entity.HasKey(e => e.CId);
-
-			entity.ToTable("customer");
-
-			entity.Property(e => e.CId)
-				.ValueGeneratedNever()
-				.HasColumnName("c_id");
-			entity.Property(e => e.CName)
-				.HasMaxLength(20)
-				.IsUnicode(false)
-				.HasColumnName("c_name");
-			entity.Property(e => e.Email)
-				.HasMaxLength(20)
-				.IsUnicode(false)
-				.HasColumnName("email");
-			entity.Property(e => e.Password)
-				.HasMaxLength(20)
-				.IsUnicode(false)
-				.HasColumnName("password");
-			entity.Property(e => e.RePassword)
-				.HasMaxLength(20)
-				.IsUnicode(false)
-				.HasColumnName("re_password");
-		});
 
 		modelBuilder.Entity<Feedback>(entity =>
 		{
@@ -129,53 +70,7 @@ public partial class DbAa7408UniversityprojectContext : IdentityDbContext<Identi
 				.HasColumnName("email");
 		});
 
-		modelBuilder.Entity<Order>(entity =>
-		{
-			entity.HasKey(e => e.OId);
 
-			entity.ToTable("order");
-
-			entity.Property(e => e.OId)
-				.ValueGeneratedNever()
-				.HasColumnName("o_id");
-			entity.Property(e => e.CId).HasColumnName("c_id");
-			entity.Property(e => e.CName)
-				.HasMaxLength(50)
-				.IsUnicode(false)
-				.HasColumnName("c_name");
-			entity.Property(e => e.PId).HasColumnName("p_id");
-			entity.Property(e => e.PName)
-				.HasMaxLength(50)
-				.IsUnicode(false)
-				.HasColumnName("p_name");
-			entity.Property(e => e.Price).HasColumnName("price");
-
-			entity.HasOne(o => o.Customer).WithMany(c => c.Orders)
-			.HasForeignKey(o => o.CId)
-			.OnDelete(DeleteBehavior.Cascade);
-
-
-		});
-
-		modelBuilder.Entity<Product>(entity =>
-		{
-			entity.HasKey(e => e.PId);
-
-			entity.ToTable("product");
-
-			entity.Property(e => e.PId)
-				.ValueGeneratedNever()
-				.HasColumnName("p_id");
-			entity.Property(e => e.PDesc)
-				.HasMaxLength(50)
-				.IsUnicode(false)
-				.HasColumnName("p_desc");
-			entity.Property(e => e.PName)
-				.HasMaxLength(50)
-				.IsUnicode(false)
-				.HasColumnName("p_name");
-			entity.Property(e => e.PPrice).HasColumnName("p_price");
-		});
 
 		OnModelCreatingPartial(modelBuilder);
 
