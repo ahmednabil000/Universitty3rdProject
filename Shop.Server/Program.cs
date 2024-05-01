@@ -47,10 +47,11 @@ builder.Services.AddSwaggerGen(options =>
 
 
 // Add Our services to the container
-// builder.Services.AddHttpContextAccessor();
-// builder.Services.AddScoped<IProductService, ProductService>();
-// builder.Services.AddScoped<IShoppingCartService, ShoppingCartService>();
-// builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IShoppingCartService, ShoppingCartService>();
+builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped<IOrderService, OrderService>();
 
 // Add authentication service
 builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>

@@ -6,12 +6,11 @@ namespace Shop.Server.ServicesContracts
 
     public interface IShoppingCartService
     {
-        Task<ShoppingCart> GetShoppingCartAsync();
-        Task AddShoppingCartItemAsync(ShoppingCartItem item);
-        Task AddShoppingCartItemsAsync(List<ShoppingCartItem> items);
-
-        Task RemoveShoppingCartItem(Guid itemId);
-        Task UpdateItemQuantity(Guid itemId, int newQuantity);
+        Task<Resault<ShoppingCart>> GetShoppingCartAsync();
+        Task<Resault<ShoppingCartItem>> AddShoppingCartItemAsync(string prodId, int quantity);
+        Task RemoveShoppingCartItemAsync(Guid itemId);
+        Task<Resault<ShoppingCart>> ClearShoppingCartAsync();
+        Task<Resault<ShoppingCartItem>> UpdateItemQuantityAsync(Guid itemId, int newQuantity);
 
     }
 }
