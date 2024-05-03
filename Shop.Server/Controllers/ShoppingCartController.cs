@@ -66,7 +66,7 @@ public class ShoppingCartController : ControllerBase
     {
         try
         {
-            var resault = await _shoppingCartService.ClearShoppingCart();
+            var resault = await _shoppingCartService.ClearShoppingCartAsync();
             if (!resault.IsSucceed) return BadRequest(resault);
 
             return Ok(resault);

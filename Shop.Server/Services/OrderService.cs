@@ -18,6 +18,46 @@ namespace Shop.Server.Services
             _context = context;
             _shoppingCartService = shoppingCartService;
         }
+        public async Task<Resault<Order>> ConfirmOrderAsCompletedAsync(Guid orderId)
+        {
+            var userId = _contextAccessor.HttpContext?.User.Claims.FirstOrDefault(c => c.Type == "user-id")?.Value;
+            var res = await GetOrderDetails(orderId);
+            if (!res.IsSucceed) return res;
+
+            var order = res.Data;
+            order.Status = OrderStatus.Completed;
+            _context.Orders.Update(order);
+
+            await _context.SaveChangesAsync();
+            return new Resault<Order>(true, "Order has been updated to completed", order);
+        }
+
+        public async Task<Resault<Order>> ConfirmOrderAsDeliverdAsync(Guid orderId)
+        {
+            var userId = _contextAccessor.HttpContext?.User.Claims.FirstOrDefault(c => c.Type == "user-id")?.Value;
+            var res = await GetOrderDetails(orderId);
+            if (!res.IsSucceed) return res;
+
+            var order = res.Data;
+            var purchasedProds = new List<UsersPurchasedProducts>();
+            order.Status = OrderStatus.Deliverd;
+            _context.Orders.Update(order);
+            foreach (var item in order.Items)
+            {
+                purchasedProds.Add(
+                 new UsersPurchasedProducts()
+                 {
+                     Id = Guid.NewGuid(),
+                     UserId = userId,
+                     ProudctId = item.ProductId,
+                 }
+               );
+            }
+            await _context.UserPurchasedProducts.AddRangeAsync(purchasedProds);
+            await _context.SaveChangesAsync();
+            return new Resault<Order>(true, "Order has been updated to Deliverd", order);
+        }
+
         public async Task<Resault<Order>> CreateOrderAsync(OrderDTO orderDTO)
         {
             var userId = _contextAccessor.HttpContext?.User.Claims.FirstOrDefault(c => c.Type == "user-id")?.Value;
@@ -31,7 +71,7 @@ namespace Shop.Server.Services
             var order = new Order()
             {
                 Id = Guid.NewGuid(),
-                UserId = new Guid(userId),
+                UserId = new Guid(userId).ToString(),
                 Items = orderItems,
                 PhoneNumber = orderDTO.PhoneNumber,
                 Streat = orderDTO.Streat,
@@ -62,7 +102,7 @@ namespace Shop.Server.Services
 
         public async Task<Resault<Order>> GetOrderDetails(Guid orderId)
         {
-            var order = await _context.Orders.FirstOrDefaultAsync(o => o.Id == orderId);
+            var order = await _context.Orders.Include(o => o.Items).FirstOrDefaultAsync(o => o.Id == orderId);
 
             if (order == null) return new Resault<Order>(false, "Order not found", null);
 

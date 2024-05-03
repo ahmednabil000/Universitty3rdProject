@@ -52,6 +52,7 @@ builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IShoppingCartService, ShoppingCartService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<IFeedbackService, FeedbackService>();
 
 // Add authentication service
 builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>

@@ -7,5 +7,7 @@ namespace Shop.Server.ServicesContracts
         Task<Resault<Order>> RemoveOrder(Guid orderId);
         Task<Resault<List<Order>>> GetOrders();
         Task<Resault<Order>> GetOrderDetails(Guid orderId);
+        Task<Resault<Order>> ConfirmOrderAsCompletedAsync(Guid orderId);
+        Task<Resault<Order>> ConfirmOrderAsDeliverdAsync(Guid orderId);
     }
 }

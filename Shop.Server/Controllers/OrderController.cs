@@ -94,5 +94,47 @@ public class OrderController : ControllerBase
             return StatusCode(StatusCodes.Status500InternalServerError, problem);
         }
     }
+    [HttpPut]
+    [Route("ConfirmOrderAsCompleted")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    public async Task<IActionResult> ConfirmOrderAsCompleted(Guid orderId)
+    {
+        try
+        {
+            var resault = await _orderService.ConfirmOrderAsCompletedAsync(orderId);
+            if (resault.IsSucceed) return Ok(resault);
+
+            return BadRequest(resault);
+
+        }
+        catch (Exception ex)
+        {
+            var problem = new ProblemDetails();
+            problem.Detail = ex.Message;
+            problem.Status = StatusCodes.Status500InternalServerError;
+            return StatusCode(StatusCodes.Status500InternalServerError, problem);
+        }
+    }
+    [HttpPut]
+    [Route("ConfirmOrderAsDeliverd")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    public async Task<IActionResult> ConfirmOrderAsDeliverd(Guid orderId)
+    {
+        try
+        {
+            var resault = await _orderService.ConfirmOrderAsDeliverdAsync(orderId);
+            if (resault.IsSucceed) return Ok(resault);
+
+            return BadRequest(resault);
+
+        }
+        catch (Exception ex)
+        {
+            var problem = new ProblemDetails();
+            problem.Detail = ex.Message;
+            problem.Status = StatusCodes.Status500InternalServerError;
+            return StatusCode(StatusCodes.Status500InternalServerError, problem);
+        }
+    }
 
 }

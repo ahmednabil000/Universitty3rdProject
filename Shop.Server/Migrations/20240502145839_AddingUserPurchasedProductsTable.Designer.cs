@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Shop.Server.Models;
 
@@ -11,9 +12,11 @@ using Shop.Server.Models;
 namespace Shop.Server.Migrations
 {
     [DbContext(typeof(DbAa7408UniversityprojectContext))]
-    partial class DbAa7408UniversityprojectContextModelSnapshot : ModelSnapshot
+    [Migration("20240502145839_AddingUserPurchasedProductsTable")]
+    partial class AddingUserPurchasedProductsTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -343,16 +346,18 @@ namespace Shop.Server.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Desc")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ImageUrl")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal?>("Price")
+                    b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("Quantity")

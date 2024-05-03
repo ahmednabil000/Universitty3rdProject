@@ -39,9 +39,9 @@ namespace Shop.Server.Services
 
 			if (!input.FilterQuery.IsNullOrEmpty())
 			{
-				productsQuery.Where(p => p.Name.Contains(input.FilterQuery));
+				productsQuery = productsQuery.Where(p => p.Name.Contains(input.FilterQuery));
 			}
-			productsQuery.Skip(input.PageSize * input.PageIndex).Take(input.PageSize);
+			productsQuery = productsQuery.Skip(input.PageSize * input.PageIndex).Take(input.PageSize);
 
 			return await productsQuery.ToListAsync();
 		}

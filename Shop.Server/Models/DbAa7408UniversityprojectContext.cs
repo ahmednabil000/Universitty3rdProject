@@ -15,13 +15,13 @@ public partial class DbAa7408UniversityprojectContext : IdentityDbContext<Identi
 	{
 	}
 
-	public virtual DbSet<Admin> Admins { get; set; }
 	public virtual DbSet<Order> Orders { get; set; }
-	public virtual DbSet<Feedback> Feedbacks { get; set; }
 	public virtual DbSet<ShoppingCart> ShoppingCarts { get; set; }
 	public virtual DbSet<ShoppingCartItem> ShoppingCartItems { get; set; }
 	public virtual DbSet<OrderItem> OrderItems { get; set; }
 	public virtual DbSet<Product> Products { get; set; }
+	public virtual DbSet<Feedback> Feedbacks { get; set; }
+	public virtual DbSet<UsersPurchasedProducts> UserPurchasedProducts { get; set; }
 
 
 	protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -30,48 +30,6 @@ public partial class DbAa7408UniversityprojectContext : IdentityDbContext<Identi
 
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
 	{
-		modelBuilder.Entity<Admin>(entity =>
-		{
-			entity.ToTable("Admin");
-
-			entity.Property(e => e.AdminId)
-				.ValueGeneratedNever()
-				.HasColumnName("admin_id");
-			entity.Property(e => e.Email)
-				.HasMaxLength(20)
-				.IsUnicode(false)
-				.HasColumnName("email");
-			entity.Property(e => e.Password)
-				.HasMaxLength(20)
-				.IsUnicode(false)
-				.HasColumnName("password");
-		});
-
-
-
-		modelBuilder.Entity<Feedback>(entity =>
-		{
-			entity
-				.HasNoKey()
-				.ToTable("feedback");
-
-			entity.Property(e => e.CName)
-				.HasMaxLength(50)
-				.IsUnicode(false)
-				.HasColumnName("c_name");
-			entity.Property(e => e.CNumber).HasColumnName("c_number");
-			entity.Property(e => e.City)
-				.HasMaxLength(50)
-				.IsUnicode(false)
-				.HasColumnName("city");
-			entity.Property(e => e.Email)
-				.HasMaxLength(50)
-				.IsUnicode(false)
-				.HasColumnName("email");
-		});
-
-
-
 		OnModelCreatingPartial(modelBuilder);
 
 		base.OnModelCreating(modelBuilder);

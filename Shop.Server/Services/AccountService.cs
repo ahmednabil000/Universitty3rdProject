@@ -42,9 +42,6 @@ namespace Shop.Server.Services
 
 			return result;
 		}
-
-
-
 		public async Task<string> GenerateTokenAsync(LogInDTO login)
 		{
 			var user = await _userManager.FindByEmailAsync(login.Email);

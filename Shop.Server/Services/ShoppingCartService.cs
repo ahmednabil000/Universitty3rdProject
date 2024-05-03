@@ -65,7 +65,7 @@ namespace Shop.Server.Services
                 cart = new ShoppingCart()
                 {
                     Id = Guid.NewGuid(),
-                    UserID = new Guid(userId!),
+                    UserID = new Guid(userId!).ToString(),
                 };
                 await _context.ShoppingCarts.AddAsync(cart);
             }
@@ -73,7 +73,13 @@ namespace Shop.Server.Services
             foreach (var item in cart.Items)
             {
                 var prod = await _productService.GetProductAsync(item.ProductID);
-                if (prod != null) totalCost += prod.Price;
+                if (prod != null)
+                {
+                    if (prod.Price != null)
+                    {
+                        totalCost += prod.Price.Value;
+                    }
+                }
             }
             cart.TotalCost = totalCost;
             return new Resault<ShoppingCart>(true, "Your shopping cart", cart);

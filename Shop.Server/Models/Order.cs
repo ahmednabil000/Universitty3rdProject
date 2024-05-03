@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Data;
 using Microsoft.AspNetCore.Identity;
 using Shop.Server.Models;
@@ -10,7 +11,8 @@ public class Order
     [Required]
     public decimal TotalCost { get; set; }
     [Required]
-    public Guid UserId { get; set; }
+    [ForeignKey(nameof(User))]
+    public string UserId { get; set; }
     [Required]
     public string Status { get; set; }
     [Required]
