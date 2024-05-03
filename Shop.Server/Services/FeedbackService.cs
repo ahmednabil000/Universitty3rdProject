@@ -1,4 +1,4 @@
-
+using System.Net.Mail;
 
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -19,10 +19,13 @@ public class FeedbackService : IFeedbackService
     public async Task<Resault<Feedback>> AddProductFeedbackAsync([FromQuery] string prodId, [FromQuery] float rate, [FromQuery] string comment)
     {
         var userId = _ContextAccessor.HttpContext!.User.Claims.FirstOrDefault(c => c.Type == "user-id")?.Value;
-        var prod = await _productService.GetProductAsync(userId);
+        var prod = await _productService.GetProductAsync(prodId);
 
         if (prod == null) return new Resault<Feedback>(false, "Product not found", null);
-        if (rate > 5 || rate <= 0) return new Resault<Feedback>(false, "Rate should be greater that 0 and less than or equal 5", null);
+        var isProdPurchasesByUser = await _context.UserPurchasedProducts.FirstOrDefaultAsync(p => p.UserId == userId && p.ProudctId == prodId);
+        if (isProdPurchasesByUser == null) return new Resault<Feedback>(false, "You didn`t purchase this product before so you can`t give a feedback to this product", null);
+
+        if (rate > 5 || rate <= 0) return new Resault<Feedback>(false, "Rate should be greater than 0 and less than or equal to 5", null);
         var feedback = new Feedback()
         {
             Id = Guid.NewGuid(),
@@ -49,7 +52,7 @@ public class FeedbackService : IFeedbackService
     public async Task<Resault<FeedbackDTO>> GetProductFeedbacks(string prdoId)
     {
         var feedbacks = await _context.Feedbacks.Where(f => f.ProductId == prdoId).ToListAsync();
-        if (feedbacks == null) return new Resault<FeedbackDTO>(false, "There are no feedbacks for this product", null);
+        if (feedbacks == null || feedbacks.Count == 0) return new Resault<FeedbackDTO>(false, "There are no feedbacks for this product", null);
         var totalRate = 0.0;
         foreach (var feedback in feedbacks)
         {

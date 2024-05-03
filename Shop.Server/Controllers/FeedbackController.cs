@@ -15,11 +15,11 @@ public class FeedbackController : ControllerBase
         _feedbackService = feedbackService;
     }
     [HttpGet]
-    public async Task<IActionResult> Get([FromQuery] string prodId)
+    public async Task<IActionResult> Get([FromQuery] string productId)
     {
         try
         {
-            var res = await _feedbackService.GetProductFeedbacks(prodId);
+            var res = await _feedbackService.GetProductFeedbacks(productId);
             if (!res.IsSucceed) return BadRequest(res);
             return Ok(res);
         }
