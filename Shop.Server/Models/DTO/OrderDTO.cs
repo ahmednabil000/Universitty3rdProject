@@ -13,6 +13,6 @@ public class OrderDTO
     public string Streat { get; set; }
     [Required]
     [Length(11, 11)]
-    [PhoneNumber]
+    [PhoneNumber(ErrorMessage = "Invalid Phone Number")]
     public string PhoneNumber { get; set; }
 }
