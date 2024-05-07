@@ -97,6 +97,7 @@ public class OrderController : ControllerBase
     [HttpPut]
     [Route("ConfirmOrderAsCompleted")]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = $"{ApplicationRoles.Admin}")]
     public async Task<IActionResult> ConfirmOrderAsCompleted(Guid orderId)
     {
         try
@@ -118,6 +119,7 @@ public class OrderController : ControllerBase
     [HttpPut]
     [Route("ConfirmOrderAsDeliverd")]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = $"{ApplicationRoles.DeliveryMan}")]
     public async Task<IActionResult> ConfirmOrderAsDeliverd(Guid orderId)
     {
         try

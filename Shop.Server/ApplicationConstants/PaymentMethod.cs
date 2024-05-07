@@ -1,7 +1,7 @@
 
 
-public class PaymentMethod
+public static class PaymentMethod
 {
-    public const string OnDelivery = "OnDelivery";
-    public const string BankCard = "BankCard";
+    public const string OnDelivery = "ondelivery";
+    public const string BankCard = "bankcard";
 }

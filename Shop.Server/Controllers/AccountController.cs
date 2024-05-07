@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Shop.Server.Models.DTO;
@@ -60,6 +62,82 @@ namespace Shop.Server.Controllers
 			}
 
 		}
+		[HttpPut]
+		[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = $"{ApplicationRoles.Admin},{ApplicationRoles.SuperAdmin}")]
+		[Route("AddDeliveryManUser")]
 
+		public async Task<IActionResult> AddDeliveryManUser(string email)
+		{
+			try
+			{
+				var resault = await _accountService.AddDeliveryManUserAsync(email);
+				if (resault.IsSucceed)
+				{
+					return Ok(resault.Message);
+				}
+				else
+				{
+					return BadRequest(resault.Message);
+				}
+			}
+			catch (Exception ex)
+			{
+				var problem = new ProblemDetails();
+				problem.Detail = ex.Message;
+				problem.Status = StatusCodes.Status500InternalServerError;
+				return StatusCode(StatusCodes.Status500InternalServerError, problem);
+			}
+		}
+		[HttpPut]
+		[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = $"{ApplicationRoles.Admin},{ApplicationRoles.SuperAdmin}")]
+		[Route("AddAdminUSer")]
+
+		public async Task<IActionResult> AddAdminUser(string email)
+		{
+			try
+			{
+				var resault = await _accountService.AddAdminUserAsync(email);
+				if (resault.IsSucceed)
+				{
+					return Ok(resault.Message);
+				}
+				else
+				{
+					return BadRequest(resault.Message);
+				}
+			}
+			catch (Exception ex)
+			{
+				var problem = new ProblemDetails();
+				problem.Detail = ex.Message;
+				problem.Status = StatusCodes.Status500InternalServerError;
+				return StatusCode(StatusCodes.Status500InternalServerError, problem);
+			}
+		}
+		[HttpPut]
+		[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+		[Route("ChangePassword")]
+		public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordDTO changePassword)
+		{
+			try
+			{
+				var resault = await _accountService.ChangePasswordAsync(changePassword);
+				if (resault.IsSucceed)
+				{
+					return Ok("Password changed successfully");
+				}
+				else
+				{
+					return BadRequest(resault.Message);
+				}
+			}
+			catch (Exception ex)
+			{
+				var problem = new ProblemDetails();
+				problem.Detail = ex.Message;
+				problem.Status = StatusCodes.Status500InternalServerError;
+				return StatusCode(StatusCodes.Status500InternalServerError, problem);
+			}
+		}
 	}
 }

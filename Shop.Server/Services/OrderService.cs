@@ -1,4 +1,5 @@
 
+using System.Transactions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Shop.Server.Models;
@@ -78,6 +79,7 @@ namespace Shop.Server.Services
                 City = orderDTO.City,
                 PaymentMethod = PaymentMethod.OnDelivery,
                 Status = OrderStatus.Processing,
+                Type = orderDTO.OrderType,
                 CreatedDate = DateTime.Now,
                 TotalCost = cart.TotalCost
             };
@@ -92,10 +94,14 @@ namespace Shop.Server.Services
                     OrderId = order.Id
                 });
             }
-            await _shoppingCartService.ClearShoppingCartAsync();
-            await _context.Orders.AddAsync(order);
-            await _context.OrderItems.AddRangeAsync(orderItems);
-            await _context.SaveChangesAsync();
+            using (var transaction = _context.Database.BeginTransaction())
+            {
+                await _shoppingCartService.ClearShoppingCartAsync();
+                await _context.Orders.AddAsync(order);
+                await _context.OrderItems.AddRangeAsync(orderItems);
+                await _context.SaveChangesAsync();
+                transaction.Commit();
+            }
 
             return new Resault<Order>(true, "Order has been created successfully", order);
         }

@@ -1,9 +1,9 @@
 
 
-public class OrderStatus
+public static class OrderStatus
 {
 
-    public const string Processing = "Processing";
-    public const string Completed = "Completed";
-    public const string Deliverd = "Deliverd";
+    public const string Processing = "processing";
+    public const string Completed = "completed";
+    public const string Deliverd = "deliverd";
 }

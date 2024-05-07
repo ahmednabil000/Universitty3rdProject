@@ -22,8 +22,9 @@ namespace Shop.Server.Services
         public async Task<Resault<ShoppingCartItem>> AddShoppingCartItemAsync(string prodId, int quantity)
         {
             if (quantity <= 0) return new Resault<ShoppingCartItem>(false, "Quantity must be greater than 0", null);
-            var isProdExist = await _context.Products.AnyAsync(p => p.Id == prodId);
-            if (!isProdExist) return new Resault<ShoppingCartItem>(false, $"There is no product with this id {prodId}", null);
+            var prod = await _context.Products.FirstOrDefaultAsync(p => p.Id == prodId);
+            if (prod == null) return new Resault<ShoppingCartItem>(false, $"There is no product with this id {prodId}", null);
+            if (quantity > prod.Quantity) return new Resault<ShoppingCartItem>(false, $"Only {prod.Quantity} pieces of this product exist", null);
 
             var userId = _httpContextAccessor.HttpContext?.User.Claims.FirstOrDefault(c => c.Type == "user-id")?.ToString();
 
