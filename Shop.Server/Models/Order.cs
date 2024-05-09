@@ -14,7 +14,11 @@ public class Order
     [ForeignKey(nameof(User))]
     public string UserId { get; set; }
     [Required]
+    [AllowedValues(OrderStatus.Completed, OrderStatus.Deliverd, OrderStatus.Processing, ErrorMessage = "Invalid Order Status order status must be processing, completed or deliverd")]
     public string Status { get; set; }
+    [Required]
+    [AllowedValues(OrderTypes.PurchaseOrder, OrderTypes.ReturnOrder, ErrorMessage = "Invalid Order Type order type must be purchase or return")]
+    public string Type { get; set; }
     [Required]
     public string PaymentMethod { get; set; }
     [Required]
@@ -23,6 +27,7 @@ public class Order
     public string Streat { get; set; }
     [Required]
     [Length(11, 11)]
+    [PhoneNumber(ErrorMessage = "Invalid Phone Number")]
     public string PhoneNumber { get; set; }
     [Required]
     public DateTime CreatedDate { get; set; }

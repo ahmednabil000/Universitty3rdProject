@@ -1,4 +1,9 @@
+<<<<<<< HEAD
 ﻿using Microsoft.AspNetCore.Authorization;
+=======
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+>>>>>>> c34c059219630d2be7773638eea5b6538bf6bea8
 using Microsoft.AspNetCore.Mvc;
 using Shop.Server.Models;
 using Shop.Server.Models.DTO;
@@ -29,6 +34,7 @@ namespace Shop.Server.Controllers
 			};
 		}
 		[HttpPost]
+		[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = $"{ApplicationRoles.Admin},{ApplicationRoles.SuperAdmin}")]
 		public async Task<RestDTO<Product>> Post([FromQuery] Product product)
 		{
 			if (product == null) return new RestDTO<Product>()
@@ -42,6 +48,7 @@ namespace Shop.Server.Controllers
 			};
 		}
 		[HttpPut]
+		[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = $"{ApplicationRoles.Admin},{ApplicationRoles.SuperAdmin}")]
 		public async Task<RestDTO<Product>> Put([FromQuery] Product product)
 		{
 			if (product != null)
@@ -55,6 +62,7 @@ namespace Shop.Server.Controllers
 			};
 		}
 		[HttpDelete]
+		[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = $"{ApplicationRoles.Admin},{ApplicationRoles.SuperAdmin}")]
 		public async Task<RestDTO<Product>> Delete([FromQuery] string productId)
 		{
 			var prod = await _productService.GetProductAsync(productId);

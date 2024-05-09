@@ -14,12 +14,14 @@ namespace Shop.Server.Services
 		private readonly SignInManager<IdentityUser> _signInManager;
 		private readonly UserManager<IdentityUser> _userManager;
 		private readonly IConfiguration _configuration;
+		private readonly IHttpContextAccessor _httpContextAccessor;
 
-		public AccountService(SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager, IConfiguration configuration)
+		public AccountService(SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager, IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
 		{
 			_signInManager = signInManager;
 			_userManager = userManager;
 			_configuration = configuration;
+			_httpContextAccessor = httpContextAccessor;
 		}
 
 		public async Task<bool> CheckLoginCredentialsAsync(LogInDTO login)
@@ -75,6 +77,62 @@ namespace Shop.Server.Services
 
 		}
 
+		public async Task<Resault<IdentityUser>> ChangePasswordAsync(ChangePasswordDTO changePasswordDTO)
+		{
+			var userId = _httpContextAccessor?.HttpContext?.User.Claims.FirstOrDefault(c => c.Type == "user-id")?.Value;
 
+			var user = await _userManager.FindByIdAsync(userId!);
+
+			var resault = await _userManager.ChangePasswordAsync(user!, changePasswordDTO.OldPassword, changePasswordDTO.NewPassword);
+
+			if (!resault.Succeeded)
+			{
+				StringBuilder sb = new StringBuilder();
+				resault.Errors.ToList().ForEach(e =>
+				{
+					sb.AppendLine(e.Description);
+				});
+				return new Resault<IdentityUser>(false, sb.ToString(), null);
+			}
+
+			return new Resault<IdentityUser>(true, "You have changed your password successfully", user);
+
+		}
+
+		public async Task<Resault<IdentityUser>> AddDeliveryManUserAsync(string email)
+		{
+			var user = await _userManager.FindByEmailAsync(email);
+			if (user == null) return new Resault<IdentityUser>(false, "User not found", null);
+
+			var result = await _userManager.AddToRoleAsync(user, ApplicationRoles.DeliveryMan);
+			if (!result.Succeeded)
+			{
+				StringBuilder sb = new StringBuilder();
+				result.Errors.ToList().ForEach(e =>
+				{
+					sb.AppendLine(e.Description);
+				});
+				return new Resault<IdentityUser>(false, sb.ToString(), null);
+			}
+			return new Resault<IdentityUser>(true, $"Role {ApplicationRoles.DeliveryMan} has been added to user {email}", user);
+		}
+
+		public async Task<Resault<IdentityUser>> AddAdminUserAsync(string email)
+		{
+			var user = await _userManager.FindByEmailAsync(email);
+			if (user == null) return new Resault<IdentityUser>(false, "User not found", null);
+
+			var result = await _userManager.AddToRoleAsync(user, ApplicationRoles.Admin);
+			if (!result.Succeeded)
+			{
+				StringBuilder sb = new StringBuilder();
+				result.Errors.ToList().ForEach(e =>
+				{
+					sb.AppendLine(e.Description);
+				});
+				return new Resault<IdentityUser>(false, sb.ToString(), null);
+			}
+			return new Resault<IdentityUser>(true, $"Role {ApplicationRoles.Admin} has been added to user {email}", user);
+		}
 	}
 }
