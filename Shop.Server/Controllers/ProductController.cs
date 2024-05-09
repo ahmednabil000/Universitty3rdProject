@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Shop.Server.Models;
 using Shop.Server.Models.DTO;
 using Shop.Server.ServicesContracts;
@@ -14,6 +15,7 @@ namespace Shop.Server.Controllers
 		{
 			_productService = productService;
 		}
+		[Authorize(Roles = "Admin")]
 		[HttpGet]
 		public async Task<RestDTO<List<Product>>> Get([FromQuery] RequestDTO input)
 		{
