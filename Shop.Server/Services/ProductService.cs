@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Shop.Server.Models;
 using Shop.Server.Models.DTO;
@@ -52,5 +53,20 @@ namespace Shop.Server.Services
 			await _context.SaveChangesAsync();
 		}
 
+		public async Task<Resault<ProductSale>> AddProductSale([FromQuery] ProductSaleDTO productSaleDTO)
+		{
+			var ps = new ProductSale()
+			{
+				Id = Guid.NewGuid(),
+				ProductId = productSaleDTO.ProdId,
+				StartDate = productSaleDTO.StartDate,
+				EndDate = productSaleDTO.EndDate,
+				SaleRate = productSaleDTO.SlaeRate
+			};
+			await _context.ProductSales.AddAsync(ps);
+
+			await _context.SaveChangesAsync();
+			return new Resault<ProductSale>(true, "The offer has been added successfully", ps);
+		}
 	}
 }

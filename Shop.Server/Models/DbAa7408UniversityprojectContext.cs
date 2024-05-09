@@ -22,6 +22,8 @@ public partial class DbAa7408UniversityprojectContext : IdentityDbContext<Identi
 	public virtual DbSet<Product> Products { get; set; }
 	public virtual DbSet<Feedback> Feedbacks { get; set; }
 	public virtual DbSet<UsersPurchasedProducts> UserPurchasedProducts { get; set; }
+	public virtual DbSet<Category> Categories { get; set; }
+	public virtual DbSet<ProductSale> ProductSales { get; set; }
 
 
 	protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
