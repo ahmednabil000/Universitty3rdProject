@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Main CSS File -->
+        <link rel="stylesheet" href="./css/login.css">
+        <!-- Render All Elements Normally -->
+        <link rel="stylesheet" href="./css/normalize.css">
+        <!-- Font Awesome Library -->
+        <link rel="stylesheet" href="css/all.min.css">
+        <link rel="icon" href="./images/logo.jpg">
+        <title>Bakery Shop</title>
+    </head>
+    <body>
+        <form id="loginForm" onsubmit="login(event)">
+            <h2>Login</h2>
+            <div>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button class="login-btn">Login</button>
+        </form>
+        <script src="./javascript/login.js"></script>
+    </body>
+</html>

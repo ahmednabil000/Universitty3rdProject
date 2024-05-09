@@ -1,0 +1,235 @@
+body {
+    background-color: #fefce8;
+    font-family: Arial, Helvetica, sans-serif;
+}
+/* Global */
+.btn-org {
+    text-decoration: none;
+    color: #FFF;
+    padding: 10px 12px;
+    font-weight: 100;
+    border-radius: 25px;
+    background-color:#FF7600;
+}
+/* Start Header Section */
+.header {
+    height: 97px;
+    display: flex;
+    justify-content: space-around;
+    color: white;
+    background-color: rgb(255, 150, 0);
+}
+.header .logo {
+    position: relative;
+    top: 25px;
+    left: 66px;
+    width: 115px;
+    height: 36px;
+}
+.header .logo img {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+}
+.header .logo span {
+    position: relative;
+    top: 0;
+}
+.header .before {
+    position: relative;
+    top: 25px;
+    width: 5px;
+    height: 33px;
+    background-color: white;
+}
+.header .links {
+    position: relative;
+    top: 20px;
+    width: 504px;
+    height: 47px;
+}
+.header .links ul {
+    display: flex;
+    justify-content: space-between;
+}
+.header .links ul a {
+    text-decoration: none;
+    color: white;
+    position: relative;
+    top: 10px;
+}
+.header .search {
+    position: relative;
+    top: 25px;
+    height: 45px;
+}
+.header .basket {
+    position: relative;
+    top: 37px;
+}
+.header .user {
+    position: relative;
+    top: 30px;
+    width: 30px;
+    height: 30px;
+    background-color: #fefce8;
+    border-radius: 50%;
+}
+.header .user:hover {
+    cursor: pointer;
+}
+.header .user_LS {
+    position: relative;
+}
+.header .user:hover ul {
+    display: block;
+    cursor: pointer;
+}
+.header .user_LS ul {
+    position: absolute;
+    text-decoration: none;
+    background-color: #fefce8;
+    list-style: none;
+    right: 0;
+    top: calc(100% + 25px);
+    min-width: 120px;
+    margin: 0;
+    padding: 0;
+    display: none;
+}
+.header .user_LS ul::before {
+    content: "";
+    border-width: 10px;
+    border-style: solid;
+    border-color: transparent transparent #fefce8 transparent;
+    position: absolute;
+    top: -18px;
+    right: 5px;
+}
+.header .user_LS ul li span {
+    margin-left: 10px;
+}
+.header .user_LS ul li a {
+    display: block;
+    padding: 10px;
+    text-align: center;
+}
+.header .user_LS ul li a:hover {
+    padding-left: 20px;
+}
+.header .user_LS ul li:not(:last-child) a {
+    border-bottom: 1px solid #ddd;
+}
+/* End Header Section */
+/* Start feedback container Section */
+.feedback .feedback_text {
+    position: relative;
+    left: 533px;
+    top: 28px;
+    width: 375px;
+    height: 125px;
+    margin-bottom: 28px;
+}
+.feedback_content {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr) .5fr repeat(3, 1fr) .5fr repeat(3, 1fr);
+    grid-template-rows: 1fr 0.2fr 1fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+}
+.div1 { grid-area: 1 / 1 / 2 / 4; }
+.div2 { grid-area: 1 / 5 / 2 / 8; }
+.div3 { grid-area: 1 / 9 / 2 / 12; }
+.div4 { grid-area: 3 / 1 / 4 / 4; }
+.div5 { grid-area: 3 / 5 / 4 / 8; }
+.div6 { grid-area: 3 / 9 / 4 / 12; }
+.div1, .div2, .div3, .div4, .div5, .div6 {
+    width: 400px;
+    height: 400px;
+    border-radius: 10px;
+}
+.div1 {
+    background-image: url("../images/Template/image\ \(29\).jpg");
+    background-size: cover;
+}
+.div2 {
+    background-image: url("../images/Template/image\ \(9\).jpg");
+    background-size: cover;
+}
+.div3 {
+    background-image: url("../images/Template/image\ \(30\).jpg");
+    background-size: cover;
+}
+.div4 {
+    background-image: url("../images/Template/image\ \(22\).jpg");
+    background-size: cover;
+}
+.div5 {
+    background-image: url("../images/Template/image\ \(14\).jpg");
+    background-size: cover;
+}
+.div6 {
+    background-image: url("../images/Template/image\ \(38\).jpg");
+    background-size: cover;
+}
+.div_text {
+    position: relative;
+    top: 146px;
+    left: 56px;
+    width: 289px;
+    height: 107px;
+    background-color: white;
+}
+/* End feedback container Section */
+/* Start subscribe Section */
+.subscribe {
+    background-image: url("../images/Template/image\ \(41\).jpg");
+    background-size: cover;
+    position: relative;
+    left: 54px;
+    width: 1376px;
+    height: 760px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+}
+#subscribe {
+    position: relative;
+    top: 369.5px;
+    left: 431px;
+    width: 442px;
+    height: 57px;
+    border-radius: 30px;
+    background-color: white;
+}
+/* End subscribe Section */
+/* Start Footer Section */
+.footer {
+    position: relative;
+    left: 60px;
+    width: 1376px;
+    height: 263px;
+}
+.footer_logo {
+    position: relative;
+    width: 115px;
+    height: 100%;
+    border-radius: 50%;
+}
+.footer_logo img {
+    width: 40px;
+    height: 36px;
+    border-radius: 50%;
+}
+.footer_links {
+    display: flex;
+    justify-content: space-between;
+    width: 800px;
+}
+.product ul a, .about ul a, .company ul a, .support ul a {
+    text-decoration: none;
+}
+.product h4, .about h4, .company h4, .support h4 {
+    position: relative;
+    left: 40px;
+}
+/* End Footer Section */
