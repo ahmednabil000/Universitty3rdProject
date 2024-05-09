@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Main CSS File -->
+    <link rel="stylesheet" href="./css/cart.css">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.css">
+    <!-- Render All Elements Normally -->
+    <link rel="stylesheet" href="./css/normalize.css">
+    <!-- Font Awesome Library -->
+    <link rel="stylesheet" href="css/all.min.css">
+    <link rel="icon" href="./images/logo.jpg">
+    <title>Bakery Shop</title>
+  </head>
+  <body>
+    <!-- Header Section -->
+    <div class="header">
+      <div class="logo">
+        <img src="./images/b9fv_cb9z_221114.jpg" alt="">
+        <span>Bakery</span>
+      </div>
+      <div class="before"></div>
+      <div class="links">
+        <ul>
+          <a href="index.html">Home</a>
+          <a href="shop.html">Shop</a>
+          <a href="feedback.html">Blog</a>
+          <a href="contactus.html">Contact</a>
+        </ul>
+      </div>
+      <div class="search">
+        <form class="d-flex" role="search">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+      </div>
+      <div class="basket">
+        <span>Basket (0)</span>
+        <i class="fa-solid fa-cart-shopping"></i>
+      </div>
+      <div class="user">
+        <i class="fa-solid fa-user" style="color: #F4952C; display: flex; justify-content: center; position: relative; top: 7px;"></i>
+        <div class="user_LS">
+          <ul>
+            <li><a href="login.html" style="text-decoration: none;"><i class="fa-solid fa-sign-in" style="color: #F4952C;"></i><span>Login</span></a></li>
+            <li><a href="subscribe.html" style="text-decoration: none;"><i class="fa-solid fa-user-plus" style="color: #F4952C;"></i><span style="margin-left: 5px; font-size: 15px;">Sign Up</span></a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="shoppingcart" style="width: 1376px; margin: 60px 60px;">
+      <div class="countitems">
+        <h1>Your Cart [4 items]</h1>
+      </div>
+      <div class="cartitems">
+        <div class="headers">
+          <div>Item</div>
+          <div>Price</div>
+          <div>Quantity</div>
+          <div>Total</div>
+        </div>
+        <hr>
+        <div class="productinfo">
+          <div class="itemdetails">
+            <div class="image"><img src="./images/logo.jpg" alt=""></div>
+            <div class="name">
+              <h5>Name</h5>
+              <p>some description</p>
+            </div>
+          </div>
+          <div class="price">&dollar;599</div>
+          <div class="quantity">
+            <i class="fa-solid fa-circle-minus" style="color: #ff7500;"></i>
+            <span>0</span>
+            <i class="fa-solid fa-circle-plus" style="color: #ff7500;"></i>
+          </div>
+          <div class="total">&dollar;499</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <div class="footer_top" style="display: flex; justify-content: space-between;">
+        <div class="footer_logo">
+          <img src="./images/b9fv_cb9z_221114.jpg" alt="">
+          <span style="position: relative; top: 2.5px;">Bakery</span>
+        </div>
+        <div class="footer_links">
+          <div class="product">
+            <h4>Product</h4>
+            <ul>
+              <p><a href="">Universal Cake</a></p>
+              <p><a href="">Candy</a></p>
+              <p><a href="">Confectionery</a></p>
+              <p><a href="">Gifts</a></p>
+            </ul>
+          </div>
+          <div class="about">
+            <h4>About</h4>
+            <ul>
+              <p><a href="">Our Mission</a></p>
+              <p><a href="">Our Story</a></p>
+              <p><a href="">Our Culture</a></p>
+              <p><a href="">Team</a></p>
+            </ul>
+          </div>
+          <div class="company">
+            <h4>Company</h4>
+            <ul>
+              <p><a href="">Condition</a></p>
+              <p><a href="">Open A Shop</a></p>
+              <p><a href="">Licensing & Terms</a></p>
+              <p><a href="">Technology</a></p>
+            </ul>
+          </div>
+          <div class="support">
+            <h4>Support</h4>
+            <ul>
+              <p><a href="">Getting Started</a></p>
+              <p><a href="">Help Center</a></p>
+              <p><a href="">Suggest A Feature</a></p>
+              <p><a href="">Report A Bug</a></p>
+            </ul>
+          </div>
+        </div>
+        <div class="followus" style="position: relative; top: 100px; width: 200px;">
+          <a class="btn-org" href="#">Follow Us</a>
+        </div>
+      </div>
+      <hr>
+      <div class="copyright" style="margin: auto; text-align: center;">
+        &copy; Copyright 2024 Bakery. All Rights Recived
+      </div>
+    </div>
+  </body>
+</html>

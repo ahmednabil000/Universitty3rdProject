@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Main CSS File -->
+        <link rel="stylesheet" href="./css/subscribe.css">
+        <!-- Render All Elements Normally -->
+        <link rel="stylesheet" href="./css/normalize.css">
+        <!-- Font Awesome Library -->
+        <link rel="stylesheet" href="css/all.min.css">
+        <link rel="icon" href="./images/logo.jpg">
+        <title>Bakery Shop</title>
+    </head>
+    <body>
+        <form id="signupForm" onsubmit="signup(event)">
+            <h2>Sign Up</h2>
+            <div>
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div>
+                <label for="re-password">Confirm Password:</label>
+                <input type="password" id="re-password" name="re-password" required>
+            </div>
+            <button class="signup-btn">Sign Up</button>
+        </form>
+        <script src="./javascript/register.js"></script>
+    </body>
+</html>

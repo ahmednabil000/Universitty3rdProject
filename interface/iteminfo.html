@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Main CSS File -->
+        <link rel="stylesheet" href="./css/iteminfo.css">
+        <!-- Bootstrap -->
+        <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.css">
+        <!-- Render All Elements Normally -->
+        <link rel="stylesheet" href="./css/normalize.css">
+        <!-- Font Awesome Library -->
+        <link rel="stylesheet" href="css/all.min.css">
+        <link rel="icon" href="./images/logo.jpg">
+        <title>Bakery Shop</title>
+    </head>
+    <body>
+        <!-- Header Section -->
+        <div class="header">
+            <div class="logo">
+                <img src="./images/b9fv_cb9z_221114.jpg" alt="">
+                <span>Bakery</span>
+            </div>
+            <div class="before"></div>
+            <div class="links">
+                <ul>
+                    <a href="index.html">Home</a>
+                    <a href="shop.html">Shop</a>
+                    <a href="feedback.html">Blog</a>
+                    <a href="contactus.html">Contact</a>
+                </ul>
+            </div>
+            <div class="search">
+                <form class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            </div>
+            <div class="basket">
+                <span>Basket (0)</span>
+                <i class="fa-solid fa-cart-shopping"></i>
+            </div>
+            <div class="user">
+                <i class="fa-solid fa-user" style="color: #F4952C; display: flex; justify-content: center; position: relative; top: 7px;"></i>
+                <div class="user_LS">
+                    <ul>
+                        <li><a href="login.html" style="text-decoration: none;"><i class="fa-solid fa-sign-in" style="color: #F4952C;"></i><span>Login</span></a></li>
+                        <li><a href="subscribe.html" style="text-decoration: none;"><i class="fa-solid fa-user-plus" style="color: #F4952C;"></i><span style="margin-left: 5px; font-size: 15px;">Sign Up</span></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- item details -->
+        <div class="item_details" style="display: flex; justify-content: space-between; width: 1376px; margin: 60px 60px;">
+            <div id="item_image"></div>
+            <div class="item_info" style="position: relative; margin: 60px 27px; width: 407px; height: 430px;">
+                <h1>Item Name</h1>
+                <h2>&dollar;12.00</h2><span style="font-size: 20px;"><del>&dollar;20.00</del></span>
+                <div class="item_rate">
+                    <i class="fa-solid fa-star" style="color: #ff7500;"></i>
+                    <i class="fa-solid fa-star" style="color: #ff7500;"></i>
+                    <i class="fa-solid fa-star" style="color: #ff7500;"></i>
+                    <i class="fa-solid fa-star-half-stroke" style="color: #ff7500;"></i>
+                    <i class="fa-regular fa-star" style="color: #ff7500;"></i>
+                </div>
+                <p>This NoiseStorm font is inspired by Classic Retro and Vintage apparel, headlines, signage, logo, quote, apparel and other creative applications.</p>
+                <div class="buy_quantity" style="display: flex; justify-content: space-evenly; width: 391px;">
+                    <div class="buy">
+                        <a class="btn-org" href="#" style="position: relative; top: 12.5px; left: 0px; width: 169px;">Buy Now</a>
+                    </div>
+                    <div class="quantity">
+                        <i class="fa-solid fa-circle-minus" style="color: #ff7500;"></i>
+                        <span>0</span>
+                        <i class="fa-solid fa-circle-plus" style="color: #ff7500;"></i>
+                    </div>
+                </div>
+                <div class="add_to_cart">
+                    <a class="btn-org" href="#" style="position: relative; top: 20px; left: 130px;">Add To Cart
+                    <i class="fa-solid fa-cart-shopping" style="color: #ffffff;"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <!-- related products -->
+        <div class="related_products" style="width: 1376px; margin: 0px 60px 60px;">
+            <h1 style="position: relative; text-align: center; margin-bottom: 30px;">Related Products</h1>
+            <div class="RP_images" style="display: flex; justify-content: space-between;">
+                <div class="div1"><a href=""><a href="" style="text-decoration: none;"><p>chocolate lollipop</a></p></a></div>
+                <div class="div2"><a href=""><a href="" style="text-decoration: none;"><p>muffin's          </a></p></a></div>
+                <div class="div3"><a href=""><a href="" style="text-decoration: none;"><p>whole wheat bread </a></p></a></div>
+                <div class="div4"><a href=""><a href="" style="text-decoration: none;"><p>chocolate cookie  </a></p></a></div>
+            </div>
+        </div>
+        <!-- <i class="fa-solid fa-star-half-stroke" style="color: #ffff00;"></i> -->
+        <!-- <i class="fa-solid fa-circle-plus" style="color: #ff7500;"></i> -->
+        <!-- <i class="fa-regular fa-circle-minus" style="color: #ff7500;"></i> -->
+        <!-- <i class="fa-solid fa-location-dot" style="color: #ff7500;"></i> -->
+        <!-- <i class="fa-regular fa-star" style="color: #ff7500;"></i> -->
+
+        <!-- Subscribe -->
+        <div class="subscribe">
+            <p style="position: relative; top: 133.5px; text-align: center; margin: auto; color: #F4952C; height: 52px; font-size: 35px;">Get Started</p>
+            <p style="position: relative; top: 211.5px; text-align: center; margin: auto; color: black; height: 72px; font-size: 50px; font-weight: bold;">Great Customers Are Using The Confectionery Shop</p>
+            <div id="subscribe">
+                <span style="position: relative; top: 19px; left: 20px;">Enter Your Email Address</span>
+                <a class="btn-org" href="subscribe.html" style="position: relative; top: 20px; left: 130px;">Subscribe</a>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <div class="footer_top" style="display: flex; justify-content: space-between;">
+                <div class="footer_logo">
+                    <img src="./images/b9fv_cb9z_221114.jpg" alt="">
+                    <span style="position: relative; top: 2.5px;">Bakery</span>
+                </div>
+                <div class="footer_links">
+                    <div class="product">
+                        <h4>Product</h4>
+                        <ul>
+                            <p><a href="">Universal Cake</a></p>
+                            <p><a href="">Candy</a></p>
+                            <p><a href="">Confectionery</a></p>
+                            <p><a href="">Gifts</a></p>
+                        </ul>
+                    </div>
+                    <div class="about">
+                        <h4>About</h4>
+                        <ul>
+                            <p><a href="">Our Mission</a></p>
+                            <p><a href="">Our Story</a></p>
+                            <p><a href="">Our Culture</a></p>
+                            <p><a href="">Team</a></p>
+                        </ul>
+                    </div>
+                    <div class="company">
+                        <h4>Company</h4>
+                        <ul>
+                            <p><a href="">Condition</a></p>
+                            <p><a href="">Open A Shop</a></p>
+                            <p><a href="">Licensing & Terms</a></p>
+                            <p><a href="">Technology</a></p>
+                        </ul>
+                    </div>
+                    <div class="support">
+                        <h4>Support</h4>
+                        <ul>
+                            <p><a href="">Getting Started</a></p>
+                            <p><a href="">Help Center</a></p>
+                            <p><a href="">Suggest A Feature</a></p>
+                            <p><a href="">Report A Bug</a></p>
+                        </ul>
+                    </div>
+                </div>
+                <div class="followus" style="position: relative; top: 100px; width: 200px;">
+                    <a class="btn-org" href="#">Follow Us</a>
+                </div>
+            </div>
+            <hr>
+            <div class="copyright" style="margin: auto; text-align: center;">
+                &copy; Copyright 2024 Bakery. All Rights Recived
+            </div>
+        </div>
+        <script>
+            var product1 = JSON.parse(sessionStorage.getItem("product1"));
+            var product2 = JSON.parse(sessionStorage.getItem("product2"));
+            var product3 = JSON.parse(sessionStorage.getItem("product3"));
+            var product4 = JSON.parse(sessionStorage.getItem("product4"));
+            var product5 = JSON.parse(sessionStorage.getItem("product5"));
+            var product6 = JSON.parse(sessionStorage.getItem("product6"));
+            var product7 = JSON.parse(sessionStorage.getItem("product7"));
+            var product8 = JSON.parse(sessionStorage.getItem("product8"));
+            var product9 = JSON.parse(sessionStorage.getItem("product9"));
+            // document.getElementById('item_image').style.backgroundImage = product1;
+        </script>
+    </body>
+</html>

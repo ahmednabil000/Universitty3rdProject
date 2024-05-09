@@ -1,0 +1,203 @@
+body {
+    background-color: #fefce8;
+    font-family: Arial, Helvetica, sans-serif;
+}
+/* Global */
+.btn-org {
+    text-decoration: none;
+    color: #FFF;
+    padding: 10px 12px;
+    font-weight: 100;
+    border-radius: 25px;
+    background-color:#FF7600;
+}
+/* Start Header Section */
+.header {
+    height: 97px;
+    display: flex;
+    justify-content: space-around;
+    color: white;
+    background-color: rgb(255, 150, 0);
+}
+.header .logo {
+    position: relative;
+    top: 25px;
+    left: 66px;
+    width: 115px;
+    height: 36px;
+}
+.header .logo img {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+}
+.header .logo span {
+    position: relative;
+    top: 0;
+}
+.header .before {
+    position: relative;
+    top: 25px;
+    width: 5px;
+    height: 33px;
+    background-color: white;
+}
+.header .links {
+    position: relative;
+    top: 20px;
+    width: 504px;
+    height: 47px;
+}
+.header .links ul {
+    display: flex;
+    justify-content: space-between;
+}
+.header .links ul a {
+    text-decoration: none;
+    color: white;
+    position: relative;
+    top: 10px;
+}
+.header .search {
+    position: relative;
+    top: 25px;
+    height: 45px;
+}
+.header .basket {
+    position: relative;
+    top: 37px;
+}
+.header .user {
+    position: relative;
+    top: 30px;
+    width: 30px;
+    height: 30px;
+    background-color: #fefce8;
+    border-radius: 50%;
+}
+.header .user:hover {
+    cursor: pointer;
+}
+.header .user_LS {
+    position: relative;
+}
+.header .user:hover ul {
+    display: block;
+    cursor: pointer;
+}
+.header .user_LS ul {
+    position: absolute;
+    text-decoration: none;
+    background-color: #fefce8;
+    list-style: none;
+    right: 0;
+    top: calc(100% + 25px);
+    min-width: 120px;
+    margin: 0;
+    padding: 0;
+    display: none;
+}
+.header .user_LS ul::before {
+    content: "";
+    border-width: 10px;
+    border-style: solid;
+    border-color: transparent transparent #fefce8 transparent;
+    position: absolute;
+    top: -18px;
+    right: 5px;
+}
+.header .user_LS ul li span {
+    margin-left: 10px;
+}
+.header .user_LS ul li a {
+    display: block;
+    padding: 10px;
+    text-align: center;
+}
+.header .user_LS ul li a:hover {
+    padding-left: 20px;
+}
+.header .user_LS ul li:not(:last-child) a {
+    border-bottom: 1px solid #ddd;
+}
+/* End Header Section */
+/* Start Contact Us Container Section */
+.CU_container {
+    position: relative;
+    width: 1376px;
+    height: 900px;
+    top: 64px;
+    left: 64px;
+}
+.CU_container .cu_text {
+    position: relative;
+    left: 533px;
+    top: 28px;
+    width: 375px;
+    height: 125px;
+}
+.div1, .div2, .div3 {
+    padding: 15px 12px 15px 17px;
+    width: 30px;
+    height: 30px;
+    background-color:rgb(252, 128, 25, 0.6);
+    border-radius: 50%;
+}
+iframe{
+    margin: auto;
+    margin-right: 20px;
+    border-radius: 10px;
+}
+/* End Contact Us Container Section */
+/* Start subscribe Section */
+.subscribe {
+    background-image: url("../images/Template/image\ \(41\).jpg");
+    background-size: cover;
+    position: relative;
+    left: 54px;
+    width: 1376px;
+    height: 760px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+}
+#subscribe {
+    position: relative;
+    top: 369.5px;
+    left: 431px;
+    width: 442px;
+    height: 57px;
+    border-radius: 30px;
+    background-color: white;
+}
+/* End subscribe Section */
+/* Start Footer Section */
+.footer {
+    position: relative;
+    left: 60px;
+    width: 1376px;
+    height: 263px;
+}
+.footer_logo {
+    position: relative;
+    width: 115px;
+    height: 100%;
+    border-radius: 50%;
+}
+.footer_logo img {
+    width: 40px;
+    height: 36px;
+    border-radius: 50%;
+}
+.footer_links {
+    display: flex;
+    justify-content: space-between;
+    width: 800px;
+}
+.product ul a, .about ul a, .company ul a, .support ul a {
+    text-decoration: none;
+}
+.product h4, .about h4, .company h4, .support h4 {
+    position: relative;
+    left: 40px;
+}
+/* End Footer Section */
