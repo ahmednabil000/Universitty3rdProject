@@ -10,6 +10,6 @@ public class ProductSale
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
     [Range(0, 100)]
-    public float SaleRate { get; set; }
+    public double SaleRate { get; set; }
     public Product Product { get; set; }
 }

@@ -17,7 +17,7 @@ namespace Shop.Server.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.3")
+                .HasAnnotation("ProductVersion", "8.0.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -306,7 +306,7 @@ namespace Shop.Server.Migrations
                     b.ToTable("OrderItems");
                 });
 
-            modelBuilder.Entity("ProductSales", b =>
+            modelBuilder.Entity("ProductSale", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -318,6 +318,9 @@ namespace Shop.Server.Migrations
                     b.Property<string>("ProductId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<double>("SaleRate")
+                        .HasColumnType("float");
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
@@ -544,7 +547,7 @@ namespace Shop.Server.Migrations
                     b.Navigation("order");
                 });
 
-            modelBuilder.Entity("ProductSales", b =>
+            modelBuilder.Entity("ProductSale", b =>
                 {
                     b.HasOne("Shop.Server.Models.Product", "Product")
                         .WithMany()

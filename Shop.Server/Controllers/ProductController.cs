@@ -1,9 +1,9 @@
-<<<<<<< HEAD
-﻿using Microsoft.AspNetCore.Authorization;
-=======
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿
 using Microsoft.AspNetCore.Authorization;
->>>>>>> c34c059219630d2be7773638eea5b6538bf6bea8
+
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+
 using Microsoft.AspNetCore.Mvc;
 using Shop.Server.Models;
 using Shop.Server.Models.DTO;
