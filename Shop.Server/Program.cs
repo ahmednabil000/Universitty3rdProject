@@ -48,7 +48,15 @@ builder.Services.AddSwaggerGen(options =>
 		}
 	});
 });
+//CORS
 
+builder.Services.AddCors(options =>
+{
+	options.AddDefaultPolicy(builder =>
+	{
+		builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+	});
+});
 
 // Add Our services to the container
 builder.Services.AddHttpContextAccessor();
@@ -93,7 +101,7 @@ builder.Services.AddDbContext<DbAa7408UniversityprojectContext>(options =>
 
 
 var app = builder.Build();
-
+app.UseCors();
 app.UseDefaultFiles();
 app.UseStaticFiles();
 

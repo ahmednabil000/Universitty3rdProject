@@ -2,6 +2,7 @@
 using System.Globalization;
 using CsvHelper;
 using CsvHelper.Configuration;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Shop.Server.Models;
@@ -9,6 +10,7 @@ using Shop.Server.Models;
 
 [ApiController]
 [Route("api/[controller]")]
+[EnableCors]
 public class SeedController : ControllerBase
 {
     private readonly UserManager<IdentityUser> _userManager;

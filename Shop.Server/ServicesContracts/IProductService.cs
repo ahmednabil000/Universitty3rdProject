@@ -7,9 +7,9 @@ namespace Shop.Server.ServicesContracts
 	{
 		Task<Product> GetProductAsync(string productId);
 		Task<List<Product>> GetProductsAsync(RequestDTO input);
-		Task AddProductAsync(Product product);
-		Task UpdateProductAsync(Product product);
-		Task DeleteProductAsync(string prodId);
+		Task<Resault<Product>> AddProductAsync(Product product);
+		Task<Resault<Product>> UpdateProductAsync(Product product);
+		Task<Resault<Product>> DeleteProductAsync(string prodId);
 		Task<Resault<ProductSale>> AddProductSale(ProductSaleDTO productSaleDTO);
 	}
 }

@@ -2,11 +2,13 @@
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Shop.Server.ServicesContracts;
 [ApiController]
 [Route("api/[controller]")]
 [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+[EnableCors]
 public class ShoppingCartController : ControllerBase
 {
     private readonly IShoppingCartService _shoppingCartService;

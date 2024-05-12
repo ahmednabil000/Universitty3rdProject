@@ -8,11 +8,13 @@ using Microsoft.AspNetCore.Mvc;
 using Shop.Server.Models;
 using Shop.Server.Models.DTO;
 using Shop.Server.ServicesContracts;
+using Microsoft.AspNetCore.Cors;
 
 namespace Shop.Server.Controllers
 {
 	[Route("api/[controller]")]
 	[ApiController]
+	[EnableCors]
 	public class ProductController : ControllerBase
 	{
 		private readonly IProductService _productService;
@@ -20,7 +22,7 @@ namespace Shop.Server.Controllers
 		{
 			_productService = productService;
 		}
-		[Authorize(Roles = "Admin")]
+
 		[HttpGet]
 		public async Task<RestDTO<List<Product>>> Get([FromQuery] RequestDTO input)
 		{
@@ -35,39 +37,59 @@ namespace Shop.Server.Controllers
 		}
 		[HttpPost]
 		[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = $"{ApplicationRoles.Admin},{ApplicationRoles.SuperAdmin}")]
-		public async Task<RestDTO<Product>> Post([FromQuery] Product product)
+		public async Task<IActionResult> Post([FromQuery] Product product)
 		{
-			if (product == null) return new RestDTO<Product>()
+			try
 			{
-				Data = product,
-			};
-			await _productService.AddProductAsync(product);
-			return new RestDTO<Product>()
+				var res = await _productService.AddProductAsync(product);
+				if (!res.IsSucceed) return BadRequest(res);
+
+				return Ok(res);
+			}
+			catch (Exception ex)
 			{
-				Data = product,
-			};
+				var problem = new ProblemDetails();
+				problem.Detail = ex.Message;
+				return StatusCode(StatusCodes.Status500InternalServerError, problem);
+			}
+
+
 		}
 		[HttpPut]
 		[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = $"{ApplicationRoles.Admin},{ApplicationRoles.SuperAdmin}")]
-		public async Task<RestDTO<Product>> Put([FromQuery] Product product)
+		public async Task<IActionResult> Put([FromQuery] Product product)
 		{
-			if (product != null)
+			try
 			{
-				await _productService.UpdateProductAsync(product);
-			}
-			return new RestDTO<Product>()
-			{
-				Data = product,
+				var res = await _productService.UpdateProductAsync(product);
+				if (!res.IsSucceed) return BadRequest(res);
 
-			};
+				return Ok(res);
+			}
+			catch (Exception ex)
+			{
+				var problem = new ProblemDetails();
+				problem.Detail = ex.Message;
+				return StatusCode(StatusCodes.Status500InternalServerError, problem);
+			}
 		}
 		[HttpDelete]
 		[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = $"{ApplicationRoles.Admin},{ApplicationRoles.SuperAdmin}")]
-		public async Task<RestDTO<Product>> Delete([FromQuery] string productId)
+		public async Task<IActionResult> Delete([FromQuery] string productId)
 		{
-			var prod = await _productService.GetProductAsync(productId);
-			await _productService.DeleteProductAsync(productId);
-			return new RestDTO<Product>() { Data = prod };
+			try
+			{
+				var res = await _productService.DeleteProductAsync(productId);
+				if (!res.IsSucceed) return BadRequest(res);
+
+				return Ok(res);
+			}
+			catch (Exception ex)
+			{
+				var problem = new ProblemDetails();
+				problem.Detail = ex.Message;
+				return StatusCode(StatusCodes.Status500InternalServerError, problem);
+			}
 		}
 
 	}

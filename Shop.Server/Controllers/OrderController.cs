@@ -2,12 +2,14 @@
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Shop.Server.ServicesContracts;
 
 
 [ApiController]
 [Route("api/[controller]")]
+[EnableCors]
 public class OrderController : ControllerBase
 {
     private readonly IOrderService _orderService;

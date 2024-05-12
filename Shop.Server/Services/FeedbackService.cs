@@ -21,6 +21,9 @@ public class FeedbackService : IFeedbackService
         var userId = _ContextAccessor.HttpContext!.User.Claims.FirstOrDefault(c => c.Type == "user-id")?.Value;
         var prod = await _productService.GetProductAsync(prodId);
 
+        var hasFeedback = await _context.Feedbacks.FirstOrDefaultAsync(f => f.ProductId == prodId && f.UserId == userId);
+        if (hasFeedback != null) return new Resault<Feedback>(false, "You already gave a feedback to this product", null);
+
         if (prod == null) return new Resault<Feedback>(false, "Product not found", null);
         var isProdPurchasesByUser = await _context.UserPurchasedProducts.FirstOrDefaultAsync(p => p.UserId == userId && p.ProudctId == prodId);
         if (isProdPurchasesByUser == null) return new Resault<Feedback>(false, "You didn`t purchase this product before so you can`t give a feedback to this product", null);

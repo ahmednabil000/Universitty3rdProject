@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
@@ -12,6 +13,7 @@ namespace Shop.Server.Controllers
 {
 	[Route("api/[controller]")]
 	[ApiController]
+	[EnableCors]
 	public class AccountController : ControllerBase
 	{
 		private readonly IConfiguration _configuration;

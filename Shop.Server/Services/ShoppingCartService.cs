@@ -73,19 +73,12 @@ namespace Shop.Server.Services
             decimal totalCost = 0m;
             foreach (var item in cart.Items)
             {
-                var offer = await _context.ProductSales.FirstOrDefaultAsync(ps => ps.ProductId == item.ProductID && ps.StartDate < DateTime.Now && ps.EndDate > DateTime.Now);
                 var prod = await _productService.GetProductAsync(item.ProductID);
                 if (prod != null)
                 {
-                    if (offer != null)
-                    {
-                        totalCost += ((decimal)prod.Price.Value / (decimal)offer.SaleRate);
-                    }
-                    else
-                    {
 
-                        totalCost += prod.Price.Value;
-                    }
+                    totalCost += (prod.Price.Value * item.Quantity);
+
                 }
             }
             cart.TotalCost = totalCost;

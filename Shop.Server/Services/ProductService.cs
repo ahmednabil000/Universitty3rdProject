@@ -20,17 +20,20 @@ namespace Shop.Server.Services
 			return prod;
 		}
 
-		public async Task AddProductAsync(Product product)
+		public async Task<Resault<Product>> AddProductAsync(Product product)
 		{
 			await _context.Products.AddAsync(product);
 			await _context.SaveChangesAsync();
+			return new Resault<Product>(true, $"The product has been added successfully", product);
 		}
 
-		public async Task DeleteProductAsync(string prodId)
+		public async Task<Resault<Product>> DeleteProductAsync(string prodId)
 		{
 			var prod = await _context.Products.FirstOrDefaultAsync(p => p.Id == prodId);
+			if (prod == null) return new Resault<Product>(false, $"Product not found", null);
 			if (prod != null) _context.Products.Remove(prod);
 			await _context.SaveChangesAsync();
+			return new Resault<Product>(true, $"The product with id {prodId} has been deleted successfully", prod);
 		}
 
 		public async Task<List<Product>> GetProductsAsync(RequestDTO input)
@@ -47,10 +50,13 @@ namespace Shop.Server.Services
 			return await productsQuery.ToListAsync();
 		}
 
-		public async Task UpdateProductAsync(Product product)
+		public async Task<Resault<Product>> UpdateProductAsync(Product product)
 		{
+			var prod = await _context.Products.FirstOrDefaultAsync(p => p.Id == product.Id);
+			if (prod == null) return new Resault<Product>(false, $"There is no product with this id {product.Id}", null);
 			_context.Update(product);
 			await _context.SaveChangesAsync();
+			return new Resault<Product>(true, $"The product with id {product.Id} has been updated successfully", product);
 		}
 
 		public async Task<Resault<ProductSale>> AddProductSale([FromQuery] ProductSaleDTO productSaleDTO)
